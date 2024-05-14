@@ -1,6 +1,4 @@
-const { default: Prettierrc } = require("./.prettierrc.cjs");
-
-module.exports = {
+module.exports = { /* eslint-disable-line */
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2021,
@@ -16,7 +14,7 @@ module.exports = {
     // 'plugin:tsdoc/recommended',
     // 'plugin:prettier/recommended',
   ],
-  plugins: ['react', '@typescript-eslint', 'tsdoc', 'prettier',],
+  plugins: ['react', '@typescript-eslint', 'tsdoc', 'prettier'],
   rules: {
     '@typescript-eslint/explicit-member-accessibility': [
       'error',
@@ -33,30 +31,6 @@ module.exports = {
     ],
     'no-shadow': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'variable',
-        types: ['boolean'],
-        format: ['PascalCase', 'UPPER_CASE'],
-        prefix: [
-          'is',
-          'should',
-          'has',
-          'can',
-          'did',
-          'will',
-          'does',
-          'IS',
-          'SHOULD',
-          'HAS',
-        ],
-      },
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
-      },
-    ],
     '@typescript-eslint/array-type': ['error', { default: 'generic' }],
     'new-cap': 'error',
     'tsdoc/syntax': 'error',

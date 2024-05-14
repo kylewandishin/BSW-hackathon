@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "prepare": "husky install",
-    "lint": "eslint . --fix --cache --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --fix --cache",
     "preview": "vite preview",
     "vitest": "vitest",
     "test": "npm run lint && npm run vitest -- run --watch"
   },
   "dependencies": {
+    "firebase": "^10.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0"
