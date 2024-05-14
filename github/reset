@@ -1,0 +1,79 @@
+#!/bin/sh
+
+if [[ "$@" == *"--help"* || "$@" == *"-h"* ]]; then
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;34mUsage:\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;32m./github/reset -r <remote repository>\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - This script will reset the git repository in the current directory and push it to the remote repository provided."
+    echo ""
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;34mOptions:\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33m--help\033[0m,\033[1;33m-h\033[0m: Show this help message and exit.\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33m--message\033[0m,\033[1;33m-m\033[0m: Set the initial commit message to new repo.\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33m--branch\033[0m,\033[1;33m-b\033[0m: Set the main branch name to new repo.\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33m--remote\033[0m,\033[1;33m-r\033[0m: Set the remote repository to push the new repo.\033[0m"
+    echo ""
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;34mExample:\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;32m./github/reset -r <remote repository>\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;32m./github/reset -r <remote repository> -m <commit message> -b <main branch name>\033[0m"
+    echo ""
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;34mAlternative:\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - If you want to reset the git repository in the current directory and push it to a remote repository, you can use the following commands:"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33m./github/reset\033[0m"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mgit remote add origin <remote repository>\033[0m"
+    exit 1
+fi
+
+echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mBegin\033[0m"
+mainBranchName="main"
+commitMessage="Template from github.com/kylewandishin/typescript-react-template"
+remoteRepository=""
+pushCommand="git push -u origin $mainBranchName"
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -m|--message)
+            shift
+            commitMessage="$1"
+            shift
+            ;;
+        -b|--branch)
+            shift
+            mainBranchName="$1"
+            shift
+            ;;
+        -r|--remote)
+            shift
+            remoteRepository="$1"
+            shift
+            ;;
+        -f|--force)
+            shift
+            pushCommand="git push -u origin $mainBranchName --force"
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+rm -rf $(dirname "$0")/../.git
+rm $(dirname "$0")/../LICENSE
+echo "\033[1;37m[Reset Program]\033[0m - old git deleted"
+git init $(dirname "$0")/../ > /dev/null 2>&1
+git branch -M $mainBranchName > /dev/null 2>&1
+git add . > /dev/null 2>&1
+git commit -m "$commitMessage" > /dev/null 2>&1
+echo "\033[1;37m[Reset Program]\033[0m - new git initialized added first commit"
+if [ "$remoteRepository" != "" ]; 
+    then 
+    git remote add origin "$remoteRepository" > /dev/null 2>&1 
+    if eval $pushCommand > /dev/null 2>&1; then
+        echo "\033[1;37m[Reset Program]\033[0m - new git pushed to remote repository"
+    else
+        echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mWarn\033[0m - Failed to push to remote repository"
+        eval $pushCommand 
+        echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mWarn\033[0m - If remote repo is not empty, you can use -f/--force to force push the new repo. [not recomended]"
+    fi
+else
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mWarn\033[0m - No remote repository provided please use:"
+    echo "\033[1;37m[Reset Program]\033[0m - \033[1;33mWarn\033[0m - \033[1;38mgit remote add origin <remote repository>\033[0m"
+fi
+echo "\033[1;37m[Reset Program]\033[0m - \033[1;32mSuccess!\033[0m"
