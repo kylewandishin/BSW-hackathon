@@ -1,5 +1,11 @@
 // import React from 'react'
 
+import Topbar from '../components/navbar';
+
 export default function Home() {
-  return <h1 className="text-[#ff0000]">Hello, World!</h1>;
+  return (
+    <div>
+      <Topbar />
+    </div>
+  );
 }
