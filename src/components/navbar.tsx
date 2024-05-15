@@ -20,6 +20,12 @@ export default function Topbar() {
         >
           Dashboard
         </Link>
+        <Link
+          to="/myresturant"
+          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+        >
+          My Resturant
+        </Link>
       </div>
       <div className="flex items-center space-x-2">
         <Link to="/signin">
