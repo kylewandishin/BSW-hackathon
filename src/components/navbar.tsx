@@ -12,6 +12,16 @@ export default function Topbar() {
           </div>
         </div>
       </Link>
+      <Link to="/dashboard">
+        <div className="flex flex-row">
+          <div className="md:w-14 w-10 logo">
+            {/* <img className="md:w-14 w-10" src={logo} alt="logo" /> */}
+          </div>
+          <div className="md:text-5xl text-3xl text-gray-800 flex items-center">
+            Dashboard
+          </div>
+        </div>
+      </Link>
       <div className="flex flex-row h-full">
         <Link to="/signin">
           <div
