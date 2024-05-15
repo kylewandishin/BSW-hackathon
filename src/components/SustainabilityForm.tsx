@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
 
 interface Ingredient {
   ingredient: string;
@@ -79,152 +80,176 @@ const SustainabilityForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Ingredients</legend>
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <fieldset className="mb-6">
+        <legend className="text-2xl font-semibold mb-4">Ingredients</legend>
         {formData.ingredients.map((ingredient, index) => (
-          <div key={index}>
-            <label>
-              Ingredient:
+          <div key={index} className="mb-4 p-4 border rounded-lg">
+            <label className="block mb-2">
+              Ingredient
               <input
                 type="text"
                 name="ingredient"
                 value={ingredient.ingredient}
                 onChange={(e) => handleChange(e, index)}
+                className="w-full p-2 border rounded-lg mt-1"
               />
             </label>
-            <br />
 
-            <label>
-              Company:
+            <label className="block mb-2">
+              Company
               <input
                 type="text"
                 name="company"
                 value={ingredient.company}
                 onChange={(e) => handleChange(e, index)}
+                className="w-full p-2 border rounded-lg mt-1"
               />
             </label>
-            <br />
 
-            <label>
-              Lbs per week:
+            <label className="block mb-2">
+              Lbs per week
               <input
                 type="text"
                 name="lbsPerWeek"
                 value={ingredient.lbsPerWeek}
                 onChange={(e) => handleChange(e, index)}
+                className="w-full p-2 border rounded-lg mt-1"
               />
             </label>
-            <br />
 
-            <label>
-              Locally sourced?:
+            <label className="block mb-2">
+              Locally sourced?
               <input
                 type="checkbox"
                 name="locallySourced"
                 checked={ingredient.locallySourced}
                 onChange={(e) => handleChange(e, index)}
+                className="ml-2"
               />
             </label>
-            <br />
 
-            <button type="button" onClick={() => handleRemoveIngredient(index)}>
-              Remove Ingredient
+            <button
+              type="button"
+              onClick={() => handleRemoveIngredient(index)}
+              className="mt-2 p-2 bg-red-500 text-white rounded-lg flex items-center"
+            >
+              <FaTrashAlt className="mr-1" /> Remove Ingredient
             </button>
-            <br />
-            <br />
           </div>
         ))}
-        <button type="button" onClick={handleAddIngredient}>
-          Add Ingredient
+        <button
+          type="button"
+          onClick={handleAddIngredient}
+          className="p-2 bg-blue-500 text-white rounded-lg flex items-center"
+        >
+          <FaPlus className="mr-1" /> Add Ingredient
         </button>
       </fieldset>
-      <br />
 
-      <label>
-        Do you recycle?:
-        <input
-          type="checkbox"
-          name="recycle"
-          checked={formData.recycle}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2 flex items-center">
+          Do you recycle?
+          <input
+            type="checkbox"
+            name="recycle"
+            checked={formData.recycle}
+            onChange={handleChange}
+            className="ml-2"
+          />
+          <FaRecycle className="ml-2 text-green-500" />
+        </label>
+      </div>
 
-      <label>
-        What takeout containers are made out of?:
-        <select
-          name="takeoutContainers"
-          value={formData.takeoutContainers}
-          onChange={handleChange}
-        >
-          <option value="">Select packaging type</option>
-          <option value="Plastic">Plastic</option>
-          <option value="Foam">Foam</option>
-          <option value="Compostable">Compostable</option>
-          <option value="Recyclable">Recyclable</option>
-          <option value="Biodegradable">Biodegradable</option>
-        </select>
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          What takeout containers are made out of?
+          <select
+            name="takeoutContainers"
+            value={formData.takeoutContainers}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          >
+            <option value="">Select packaging type</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Foam">Foam</option>
+            <option value="Compostable">Compostable</option>
+            <option value="Recyclable">Recyclable</option>
+            <option value="Biodegradable">Biodegradable</option>
+          </select>
+        </label>
+      </div>
 
-      <label>
-        Do you donate food waste and/or compost?:
-        <input
-          type="checkbox"
-          name="foodWasteDealing"
-          checked={formData.foodWasteDealing}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          Do you donate food waste and/or compost?
+          <input
+            type="checkbox"
+            name="foodWasteDealing"
+            checked={formData.foodWasteDealing}
+            onChange={handleChange}
+            className="ml-2"
+          />
+        </label>
+      </div>
 
-      <label>
-        How much water do you use a month (Gallons)?:
-        <input
-          type="text"
-          name="waterUsage"
-          value={formData.waterUsage}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          How much water do you use a month (Gallons)?
+          <input
+            type="text"
+            name="waterUsage"
+            value={formData.waterUsage}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
 
-      <label>
-        Gas stove?:
-        <input
-          type="checkbox"
-          name="gasOrElectricStove"
-          checked={formData.gasOrElectricStove}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          Gas stove?
+          <input
+            type="checkbox"
+            name="gasOrElectricStove"
+            checked={formData.gasOrElectricStove}
+            onChange={handleChange}
+            className="ml-2"
+          />
+        </label>
+      </div>
 
-      <label>
-        How much power do you use a month (kilowatt-hours)?:
-        <input
-          type="text"
-          name="powerUsage"
-          value={formData.powerUsage}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          How much power do you use a month (kilowatt-hours)?
+          <input
+            type="text"
+            name="powerUsage"
+            value={formData.powerUsage}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
 
-      <label>
-        What percent of your energy comes from renewables (0-100%)?:
-        <input
-          type="number"
-          name="greenEnergy"
-          value={formData.greenEnergy}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
+      <div className="mb-4">
+        <label className="block mb-2">
+          What percent of your energy comes from renewables (0-100%)?
+          <input
+            type="number"
+            name="greenEnergy"
+            value={formData.greenEnergy}
+            onChange={handleChange}
+            min="0"
+            max="100"
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
 
-      <button type="submit">Submit</button>
+      <button type="submit" className="p-2 bg-green-500 text-white rounded-lg transition-transform transform hover:scale-105">
+        Submit
+      </button>
     </form>
   );
 };
