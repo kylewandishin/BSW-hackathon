@@ -1,11 +1,9 @@
 // import React from 'react'
 
-import Topbar from '../components/navbar';
-
 export default function Home() {
   return (
     <div>
-      <Topbar />
+      <h1>Hello</h1>
     </div>
   );
 }

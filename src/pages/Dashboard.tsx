@@ -3,7 +3,6 @@ import {
   BedrockRuntimeClient,
   InvokeModelCommand,
 } from '@aws-sdk/client-bedrock-runtime';
-import Topbar from '../components/navbar';
 import CircularProgressBar from '../components/circularrogressbar.tsx';
 
 // bedrock accesskeys
@@ -79,7 +78,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Topbar />
       <div className="bg-white shadow-md rounded p-6">
         <br></br>
         <br></br>
