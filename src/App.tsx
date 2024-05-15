@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import Topbar from './components/navbar';
 import Signin from './pages/Signin';
-import Protected from './contexts/protected';
+// import Protected from './contexts/protected';
 import MyResturant from './pages/MyResturant';
 
 function App() {
@@ -17,12 +17,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route
-            path="/dashboard"
-            element={
-              <Protected>
-                <Dashboard />
-              </Protected>
-            }
+            path="/dashboard" element={<Dashboard />}
+            // element={
+            //   <Protected>
+            //     <Dashboard />
+            //   </Protected>
+            // }
           />
           <Route
             path="/myresturant"
