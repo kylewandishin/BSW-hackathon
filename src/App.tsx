@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound';
 import Topbar from './components/navbar';
 import Signin from './pages/Signin';
 import Protected from './contexts/protected';
+import MyResturant from './pages/MyResturant';
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
               <Protected>
                 <Dashboard />
               </Protected>
+            }
+          />
+          <Route
+            path="/myresturant"
+            element={
+              // <Protected>
+                <MyResturant />
+              // </Protected> 
             }
           />
           <Route path="/signin" element={<Signin />} />
