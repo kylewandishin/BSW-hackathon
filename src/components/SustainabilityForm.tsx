@@ -80,7 +80,10 @@ const SustainabilityForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg"
+    >
       <fieldset className="mb-6">
         <legend className="text-2xl font-semibold mb-4">Ingredients</legend>
         {formData.ingredients.map((ingredient, index) => (
@@ -247,7 +250,10 @@ const SustainabilityForm: React.FC = () => {
         </label>
       </div>
 
-      <button type="submit" className="p-2 bg-green-500 text-white rounded-lg transition-transform transform hover:scale-105">
+      <button
+        type="submit"
+        className="p-2 bg-green-500 text-white rounded-lg transition-transform transform hover:scale-105"
+      >
         Submit
       </button>
     </form>

@@ -13,7 +13,10 @@ export default function Home() {
           <p className="text-lg md:text-2xl text-gray-600 mb-8">
             Your partner in sustainable and eco-friendly dining
           </p>
-          <Link to="/learn-more" className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg md:text-xl hover:bg-green-400 transition-colors">
+          <Link
+            to="/learn-more"
+            className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg md:text-xl hover:bg-green-400 transition-colors"
+          >
             Learn More
           </Link>
         </section>
@@ -28,7 +31,8 @@ export default function Home() {
                 Helping Businesses Become More Sustainable
               </h3>
               <p className="text-gray-600 flex-grow">
-                We provide tools and resources to help businesses adopt sustainable practices and reduce their environmental impact.
+                We provide tools and resources to help businesses adopt
+                sustainable practices and reduce their environmental impact.
               </p>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6 flex-1 flex flex-col">
@@ -36,7 +40,8 @@ export default function Home() {
                 Promoting Sustainable Establishments
               </h3>
               <p className="text-gray-600 flex-grow">
-                We promote and support businesses that prioritize sustainability and eco-friendliness.
+                We promote and support businesses that prioritize sustainability
+                and eco-friendliness.
               </p>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6 flex-1 flex flex-col">
@@ -44,7 +49,9 @@ export default function Home() {
                 Sponsoring Locally Sourced Ingredients
               </h3>
               <p className="text-gray-600 flex-grow">
-                We sponsor the use of locally sourced ingredients to support local farmers and reduce the carbon footprint of food transportation.
+                We sponsor the use of locally sourced ingredients to support
+                local farmers and reduce the carbon footprint of food
+                transportation.
               </p>
             </div>
           </div>
@@ -53,11 +60,19 @@ export default function Home() {
 
       <footer className="bg-gray-800 text-white py-6">
         <div className="container mx-auto text-center">
-          <p className="mb-4">&copy; {new Date().getFullYear()} ECO-bites. All rights reserved.</p>
+          <p className="mb-4">
+            &copy; {new Date().getFullYear()} ECO-bites. All rights reserved.
+          </p>
           <nav className="flex justify-center space-x-4">
-            <Link to="/privacy" className="hover:text-gray-400">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-gray-400">Terms of Service</Link>
-            <Link to="/contact" className="hover:text-gray-400">Contact Us</Link>
+            <Link to="/privacy" className="hover:text-gray-400">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-gray-400">
+              Terms of Service
+            </Link>
+            <Link to="/contact" className="hover:text-gray-400">
+              Contact Us
+            </Link>
           </nav>
         </div>
       </footer>
