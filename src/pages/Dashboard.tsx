@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+import {
+  BedrockRuntimeClient,
+  InvokeModelCommand,
+} from '@aws-sdk/client-bedrock-runtime';
 import Topbar from '../components/navbar';
 import CircularProgressBar from '../components/circularrogressbar.tsx';
 
@@ -25,18 +28,18 @@ const Home: React.FC = () => {
     const query = `Human: What color is the sky?\nAssistant:`;
 
     const params = {
-      modelId: "anthropic.claude-v2",
-      contentType: "application/json",
-      accept: "application/json",
+      modelId: 'anthropic.claude-v2',
+      contentType: 'application/json',
+      accept: 'application/json',
       body: JSON.stringify({
         prompt: query,
         max_tokens_to_sample: 100,
         temperature: 0.5,
         top_k: 250,
         top_p: 1,
-        stop_sequences: ["\n\nHuman:"],
-        anthropic_version: "bedrock-2023-05-31"
-      })
+        stop_sequences: ['\n\nHuman:'],
+        anthropic_version: 'bedrock-2023-05-31',
+      }),
     };
 
     try {
@@ -46,17 +49,17 @@ const Home: React.FC = () => {
 
       const decoder = new TextDecoder('utf-8');
       const responseString = decoder.decode(bedrockReturn.body);
-      
+
       const responseJSON = JSON.parse(responseString);
       const answer = responseJSON.completion;
       setResponse(answer);
       setLoading(false);
-    } catch (error) {
-      console.error('Error querying:', error);
-      if (error instanceof Error) {
-        setError(error.message);
+    } catch (err) {
+      console.error('Error querying:', err);
+      if (err instanceof Error) {
+        setError(err.message);
       } else {
-        setError(String(error));
+        setError(String(err));
       }
       setLoading(false);
     }
@@ -76,25 +79,26 @@ const Home: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-    <Topbar />
-    <div className="bg-white shadow-md rounded p-6">
-      <br></br> 
-      <br></br>     
-      {response ? (
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Response from CLAUDE!!!!</h2>
-          <div className="bg-gray-100 p-4 rounded border overflow-x-auto">
-            <pre className="whitespace-pre-wrap">{response}</pre>
+      <Topbar />
+      <div className="bg-white shadow-md rounded p-6">
+        <br></br>
+        <br></br>
+        {response ? (
+          <div>
+            <h2 className="text-2xl font-semibold mb-2">
+              Response from CLAUDE!!!!
+            </h2>
+            <div className="bg-gray-100 p-4 rounded border overflow-x-auto">
+              <pre className="whitespace-pre-wrap">{response}</pre>
+            </div>
           </div>
-        </div>
-      ) : (
-        <p className="text-gray-600">No response yet.</p>
-      )}
+        ) : (
+          <p className="text-gray-600">No response yet.</p>
+        )}
+      </div>
+      <CircularProgressBar value={75} text="75%" />
     </div>
-        <CircularProgressBar value={75} text="75%" />
-  </div>
-);
+  );
 };
-
 
 export default Home;

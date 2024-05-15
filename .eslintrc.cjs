@@ -1,4 +1,5 @@
-module.exports = { /* eslint-disable-line */
+/* eslint-disable-next-line */
+module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2021,

@@ -10,9 +10,14 @@ export default function Topbar() {
             {/* <img className="md:w-14 w-10" src={logo} alt="logo" /> */}
             <span className="text-white font-bold">Logo</span>
           </div>
-          <span className="md:text-2xl text-xl text-gray-800 font-poppins">ECO-bites</span>
+          <span className="md:text-2xl text-xl text-gray-800 font-poppins">
+            ECO-bites
+          </span>
         </Link>
-        <Link to="/dashboard" className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New">
+        <Link
+          to="/dashboard"
+          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+        >
           Dashboard
         </Link>
       </div>

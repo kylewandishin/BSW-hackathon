@@ -3,7 +3,6 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 
-
 function App() {
   return (
     <Routes>

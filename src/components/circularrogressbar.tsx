@@ -7,7 +7,10 @@ interface CircularProgressBarProps {
   text?: string; // Optional text to display inside the circle
 }
 
-const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ value, text }) => {
+const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
+  value,
+  text,
+}) => {
   return (
     <div style={{ width: 200, height: 200, margin: '0 auto' }}>
       <CircularProgressbar
