@@ -1,32 +1,25 @@
 import { Link } from 'react-router-dom';
+import 'tailwindcss/tailwind.css'; // Ensure you have TailwindCSS installed and configured
 
 export default function Topbar() {
   return (
-    <div className="bg-[#fcfcfc] h-[4rem] flex flex-row justify-between min-w-[200px] w-full absolute">
-      <Link to="/team">
-        <div className="flex flex-row">
-          {/* <img className="md:w-14 w-10" src={logo} alt="logo" /> */}
-          <div className="md:w-14 w-10">logo</div>
-          <div className="md:text-5xl text-3xl text-gray-800 flex items-center">
-            ECO-bites
+    <div className="bg-white shadow-md h-[4rem] flex items-center justify-between px-4 md:px-8 w-full fixed top-0 z-10">
+      <div className="flex items-center space-x-2">
+        <Link to="/team" className="flex items-center space-x-2">
+          <div className="w-8 h-8 md:w-12 md:h-12 bg-gray-300 flex items-center justify-center rounded-full">
+            {/* <img className="md:w-14 w-10" src={logo} alt="logo" /> */}
+            <span className="text-white font-bold">Logo</span>
           </div>
-        </div>
-      </Link>
-      <div className="flex flex-row h-full">
-        <Link to="/signin">
-          <div
-            // onClick={handleGoogleSignIn}
-            className="bg-[#edeea6] text-gray-800 md:text-xl text-sm px-3 py-2 md:w-[7rem] w-[5rem] hover:bg-[#ecec87] h-full flex items-center justify-center border-b-2 border-b-slate-50"
-          >
-            Sign in
-          </div>
+          <span className="md:text-2xl text-xl text-gray-800 font-poppins">ECO-bites</span>
         </Link>
+        <Link to="/dashboard" className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New">
+          Dashboard
+        </Link>
+      </div>
+      <div className="flex items-center space-x-2">
         <Link to="/signin">
-          <div
-            // onClick={handleGoogleSignIn}
-            className="bg-[#eea6db] text-gray-800 md:text-xl text-sm px-3 py-2 md:w-[7rem] w-[5rem] hover:bg-[#ec87d8] h-full flex items-center justify-center border-b-2 border-b-slate-50"
-          >
-            Sign up
+          <div className="bg-[#edeea6] text-gray-800 md:text-base text-sm px-3 py-2 md:w-[10rem] w-[4rem] hover:bg-[#ecec87] h-full flex items-center justify-center rounded-lg transition-colors">
+            Buisness Sign in
           </div>
         </Link>
       </div>

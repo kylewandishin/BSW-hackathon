@@ -9,16 +9,21 @@
     "prepare": "husky install",
     "lint": "eslint . --fix --cache",
     "preview": "vite preview",
-    "vitest": "vitest",
-    "test": "npm run lint && npm run vitest -- run --watch"
+    "vitest": "vitest"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.576.0",
+    "@aws-sdk/client-sts": "^3.576.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.576.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.17",
     "@mui/x-date-pickers": "^7.4.0",
+    "aws-sdk": "^2.1620.0",
+    "dayjs": "^1.11.11",
     "firebase": "^10.12.0",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0"
   },
