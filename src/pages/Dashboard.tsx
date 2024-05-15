@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
 import Topbar from '../components/navbar';
+import CircularProgressBar from '../components/circularrogressbar.tsx';
 
 // bedrock accesskeys
 // !should change this later to a method that can actually be deployed but will use this for now!
@@ -77,7 +78,8 @@ const Home: React.FC = () => {
     <div className="container mx-auto p-4">
     <Topbar />
     <div className="bg-white shadow-md rounded p-6">
-      <h1 className="text-3xl font-bold mb-4">TITLE</h1>
+      <br></br> 
+      <br></br>     
       {response ? (
         <div>
           <h2 className="text-2xl font-semibold mb-2">Response from CLAUDE!!!!</h2>
@@ -89,6 +91,7 @@ const Home: React.FC = () => {
         <p className="text-gray-600">No response yet.</p>
       )}
     </div>
+        <CircularProgressBar value={75} text="75%" />
   </div>
 );
 };
