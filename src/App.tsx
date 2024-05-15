@@ -16,7 +16,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route
-            path="/dashboard" element={<Dashboard />}
+            path="/dashboard"
+            element={<Dashboard />}
             // element={
             //   <Protected>
             //     <Dashboard />

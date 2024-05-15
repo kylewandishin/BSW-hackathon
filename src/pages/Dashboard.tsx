@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CircularProgressBarProps from '../components/circularrogressbar'
+import CircularProgressBarProps from '../components/circularrogressbar';
 
 const Dashboard: React.FC = () => {
   const [prompt, setPrompt] = useState('');
@@ -33,7 +33,10 @@ const Dashboard: React.FC = () => {
           className="w-full p-2 border rounded"
           placeholder="Enter your prompt"
         />
-        <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded">
+        <button
+          type="submit"
+          className="mt-2 p-2 bg-blue-500 text-white rounded"
+        >
           Submit
         </button>
       </form>
@@ -44,8 +47,7 @@ const Dashboard: React.FC = () => {
         </div>
       )}
       {/* circular progressbarprops with text val of 76 */}
-          <CircularProgressBarProps value={76} text={'75%'}/>
-
+      <CircularProgressBarProps value={76} text={'75%'} />
     </div>
   );
 };
