@@ -28,8 +28,8 @@ function App() {
             path="/myresturant"
             element={
               // <Protected>
-                <MyResturant />
-              // </Protected> 
+              <MyResturant />
+              // </Protected>
             }
           />
           <Route path="/signin" element={<Signin />} />

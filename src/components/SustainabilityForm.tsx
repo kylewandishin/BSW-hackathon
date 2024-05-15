@@ -20,17 +20,22 @@ interface FormData {
 
 const SustainabilityForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    ingredients: [{ ingredient: '', company: '', lbsPerWeek: '', locallySourced: false }],
+    ingredients: [
+      { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false },
+    ],
     recycle: false,
     takeoutContainers: '',
     foodWasteDealing: false,
     waterUsage: '',
     gasOrElectricStove: false,
     powerUsage: '',
-    greenEnergy: 0
+    greenEnergy: 0,
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, index?: number) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    index?: number,
+  ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
     const newValue = type === 'checkbox' ? checked : value;
 
@@ -38,13 +43,13 @@ const SustainabilityForm: React.FC = () => {
       const updatedIngredients = [...formData.ingredients];
       updatedIngredients[index] = {
         ...updatedIngredients[index],
-        [name]: newValue
+        [name]: newValue,
       };
       setFormData({ ...formData, ingredients: updatedIngredients });
     } else {
       setFormData({
         ...formData,
-        [name]: newValue
+        [name]: newValue,
       });
     }
   };
@@ -52,12 +57,17 @@ const SustainabilityForm: React.FC = () => {
   const handleAddIngredient = () => {
     setFormData({
       ...formData,
-      ingredients: [...formData.ingredients, { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false }]
+      ingredients: [
+        ...formData.ingredients,
+        { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false },
+      ],
     });
   };
 
   const handleRemoveIngredient = (index: number) => {
-    const updatedIngredients = formData.ingredients.filter((_, i) => i !== index);
+    const updatedIngredients = formData.ingredients.filter(
+      (_, i) => i !== index,
+    );
     setFormData({ ...formData, ingredients: updatedIngredients });
   };
 
@@ -121,7 +131,8 @@ const SustainabilityForm: React.FC = () => {
             <button type="button" onClick={() => handleRemoveIngredient(index)}>
               Remove Ingredient
             </button>
-            <br /><br />
+            <br />
+            <br />
           </div>
         ))}
         <button type="button" onClick={handleAddIngredient}>
@@ -141,7 +152,7 @@ const SustainabilityForm: React.FC = () => {
       </label>
       <br />
 
-            <label>
+      <label>
         What takeout containers are made out of?:
         <select
           name="takeoutContainers"
@@ -157,7 +168,6 @@ const SustainabilityForm: React.FC = () => {
         </select>
       </label>
       <br />
-
 
       <label>
         Do you donate food waste and/or compost?:
