@@ -48,7 +48,6 @@ const Home: React.FC = () => {
       
       const responseJSON = JSON.parse(responseString);
       const answer = responseJSON.completion;
-
       setResponse(answer);
       setLoading(false);
     } catch (error) {
