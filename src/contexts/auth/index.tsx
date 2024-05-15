@@ -19,7 +19,6 @@ export const AuthContextProvider = (props: AuthContextProps) => {
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    // signInWithPopup(auth, provider);
     signInWithRedirect(auth, provider);
   };
 
