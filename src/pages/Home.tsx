@@ -14,10 +14,10 @@ export default function Home() {
             Your partner in sustainable and eco-friendly dining
           </p>
           <Link
-            to="/learn-more"
+            to="/Resturants"
             className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg md:text-xl hover:bg-green-400 transition-colors"
           >
-            Learn More
+            Find One Near You!
           </Link>
         </section>
 

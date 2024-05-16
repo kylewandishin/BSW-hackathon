@@ -7,6 +7,7 @@ import Topbar from './components/navbar';
 import Signin from './pages/Signin';
 import Protected from './contexts/protected';
 import MyResturant from './pages/MyResturant';
+import Resturants from './pages/Resturants';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/resturants" element={<Resturants />} />
           <Route
             path="/dashboard"
             element={
