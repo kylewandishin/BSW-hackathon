@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
-import { database } from '../firebaseConfig';
-import { ref, set } from 'firebase/database';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 interface Ingredient {
   ingredient: string;
@@ -19,6 +19,7 @@ interface FormData {
   gasOrElectricStove: boolean;
   powerUsage: string;
   greenEnergy: number;
+  veganVegetarianOptions: boolean;
 }
 
 const SustainabilityForm: React.FC = () => {
@@ -33,6 +34,7 @@ const SustainabilityForm: React.FC = () => {
     gasOrElectricStove: false,
     powerUsage: '',
     greenEnergy: 0,
+    veganVegetarianOptions: false,
   });
 
   const handleChange = (
@@ -74,17 +76,16 @@ const SustainabilityForm: React.FC = () => {
     setFormData({ ...formData, ingredients: updatedIngredients });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const dataRef = ref(database, 'sustainabilityForm/' + new Date().getTime());
-    set(dataRef, formData)
-      .then(() => {
-        console.log('Data saved successfully:', formData);
-        console.log('formData:', JSON.stringify(formData, null, 2));
-      })
-      .catch((error) => {
-        console.error('Error saving data:', error);
-      });
+    try {
+      await addDoc(collection(db, 'sustainabilityForm'), formData);
+      alert('Data saved successfully');
+      console.log('formData:', JSON.stringify(formData, null, 2));
+    } catch (error) {
+      console.error('Error saving data:', error);
+      alert('Failed to save data');
+    }
   };
 
   return (
@@ -254,6 +255,19 @@ const SustainabilityForm: React.FC = () => {
             min="0"
             max="100"
             className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          Vegan/Vegetarian options?
+          <input
+            type="checkbox"
+            name="veganVegetarianOptions"
+            checked={formData.veganVegetarianOptions}
+            onChange={handleChange}
+            className="ml-2"
           />
         </label>
       </div>

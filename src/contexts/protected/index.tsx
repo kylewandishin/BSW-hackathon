@@ -1,5 +1,5 @@
+import { useAuth } from '../auth'; // Corrected import
 import { Navigate } from 'react-router-dom';
-import { UserAuth } from '../auth';
 
 type ProtectedProps = {
   children: React.ReactNode;
@@ -7,8 +7,7 @@ type ProtectedProps = {
 
 const Protected = (props: ProtectedProps) => {
   const { children } = props;
-  /* eslint-disable-next-line */
-  const { user } = UserAuth() as { user: any };
+  const { user } = useAuth() as { user: any }; // Use useAuth instead of UserAuth
   if (!user || Object.keys(user).length === 0) {
     return <Navigate to="/" />;
   }

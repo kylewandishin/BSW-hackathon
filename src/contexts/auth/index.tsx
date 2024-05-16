@@ -1,21 +1,21 @@
-import { useContext, createContext, useEffect, useState } from 'react';
+import { useContext, createContext, useEffect, useState, ReactNode } from 'react';
 import {
   GoogleAuthProvider,
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth } from '../../firebase'; // Ensure the correct path is used
 
 type AuthContextProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const AuthContext = createContext(null as unknown);
+const AuthContext = createContext<any>(null);
 
 export const AuthContextProvider = (props: AuthContextProps) => {
   const { children } = props;
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<object | null>(null);
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
@@ -28,7 +28,7 @@ export const AuthContextProvider = (props: AuthContextProps) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser || {});
+      setUser(currentUser);
     });
     return () => {
       unsubscribe();
@@ -42,7 +42,7 @@ export const AuthContextProvider = (props: AuthContextProps) => {
   );
 };
 
-export const UserAuth = () => {
+export const useAuth = () => {
   return useContext(AuthContext);
 };
-export default UserAuth;
+export default useAuth;
