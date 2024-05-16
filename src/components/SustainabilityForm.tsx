@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
-import { database } from '../firebaseConfig';
-import { ref, set } from 'firebase/database';
+// import { database } from '../firebaseConfig';
+// import { ref, set } from 'firebase/database';
 
 interface Ingredient {
   ingredient: string;
@@ -76,15 +76,15 @@ const SustainabilityForm: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const dataRef = ref(database, 'sustainabilityForm/' + new Date().getTime());
-    set(dataRef, formData)
-      .then(() => {
-        console.log('Data saved successfully:', formData);
-        console.log('formData:', JSON.stringify(formData, null, 2));
-      })
-      .catch((error) => {
-        console.error('Error saving data:', error);
-      });
+    // const dataRef = ref(database, 'sustainabilityForm/' + new Date().getTime());
+    // set(dataRef, formData)
+    //   .then(() => {
+    //     console.log('Data saved successfully:', formData);
+    //     console.log('formData:', JSON.stringify(formData, null, 2));
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error saving data:', error);
+    //   });
   };
 
   return (
