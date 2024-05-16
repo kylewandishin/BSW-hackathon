@@ -98,7 +98,7 @@ const SustainabilityForm: React.FC = () => {
     e.preventDefault();
     if (user) {
       try {
-        const userDoc = doc(collection(db, 'sustainabilityForm'), user.uid);
+        const userDoc = doc(collection(db, 'sustainabilityForms'), user.uid);
         await setDoc(userDoc, { ...formData, userId: user.uid });
         alert('Data saved successfully');
         console.log('formData:', JSON.stringify(formData, null, 2));

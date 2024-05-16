@@ -4,7 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { useLocation } from 'react-router-dom';
 // import { useEffect } from 'react';
 import default_resturant from '../assets/default_resturant.jpg';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 interface Restaurant {
   id: number;

@@ -35,7 +35,7 @@ interface FormData {
 }
 
 const Dashboard: React.FC = () => {
-  const [goals, setGoals] = useState<Array<Goal>>([]);
+  const [goals, setGoals] = useState<Goal[]>([]);
   const [newGoal, setNewGoal] = useState('');
   const [formData, setFormData] = useState<FormData | null>(null);
   const [recommendations, setRecommendations] = useState<string>('');

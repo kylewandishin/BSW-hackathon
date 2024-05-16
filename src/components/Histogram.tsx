@@ -4,7 +4,6 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  LogarithmicScale,
   BarElement,
   Title,
   Tooltip,
@@ -14,7 +13,6 @@ import {
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  LogarithmicScale,
   BarElement,
   Title,
   Tooltip,
@@ -50,15 +48,6 @@ const Histogram: React.FC<HistogramProps> = ({
 
   const options = {
     responsive: true,
-    scales: {
-      y: {
-        type: 'logarithmic', // Use logarithmic scale
-        title: {
-          display: true,
-          text: 'Values',
-        },
-      },
-    },
     plugins: {
       legend: {
         position: 'top' as const,
@@ -68,9 +57,27 @@ const Histogram: React.FC<HistogramProps> = ({
         text: 'Company Values vs Goal Values',
       },
     },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Metrics',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Values',
+        },
+      },
+    },
   };
 
-  return <Bar data={data} options={options} />;
+  return (
+    <div className="w-full h-96">
+      <Bar data={data} options={options} />
+    </div>
+  );
 };
 
 export default Histogram;
