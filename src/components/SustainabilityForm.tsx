@@ -109,7 +109,7 @@ const SustainabilityForm: React.FC = () => {
           />
         </label>
       </div>
-      
+
       <fieldset className="mb-6">
         <legend className="text-2xl font-semibold mb-4">Ingredients</legend>
         {formData.ingredients.map((ingredient, index) => (
