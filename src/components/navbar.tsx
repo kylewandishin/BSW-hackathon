@@ -1,8 +1,47 @@
 import { Link } from 'react-router-dom';
 import 'tailwindcss/tailwind.css'; // Ensure you have TailwindCSS installed and configured
 import logo from '../assets/ECOBites.webp';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth';
+import { auth } from '../firebase/index';
+import { useEffect, useState } from 'react';
 
 export default function Topbar() {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error('Error signing in with Google: ', error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
   return (
     <div className="bg-white shadow-md h-[4rem] flex items-center justify-between px-4 md:px-8 w-full fixed top-0 z-10">
       <div className="flex items-center space-x-2">
@@ -16,30 +55,44 @@ export default function Topbar() {
           </span>
         </Link>
         <Link
-          to="/Resturants"
+          to="/restaurants"
           className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
         >
-          Resturants
+          Restaurants
         </Link>
-        <Link
-          to="/dashboard"
-          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
-        >
-          Dashboard
-        </Link>
-        <Link
-          to="/myresturant"
-          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
-        >
-          My Resturant
-        </Link>
+        {user && (
+          <>
+            <Link
+              to="/dashboard"
+              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/myrestaurant"
+              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+            >
+              My Restaurant
+            </Link>
+          </>
+        )}
       </div>
       <div className="flex items-center space-x-2">
-        <Link to="/signin">
-          <div className="bg-[#edeea6] text-gray-800 md:text-base text-sm px-3 py-2 md:w-[10rem] w-[4rem] hover:bg-[#ecec87] h-full flex items-center justify-center rounded-lg transition-colors">
-            Buisness Sign in
+        {!user ? (
+          <div
+            onClick={handleGoogle}
+            className="bg-[#edeea6] text-gray-800 md:text-base text-sm px-3 py-2 md:w-[10rem] w-[4rem] hover:bg-[#ecec87] h-full flex items-center justify-center rounded-lg transition-colors cursor-pointer"
+          >
+            Business Sign in
           </div>
-        </Link>
+        ) : (
+          <div
+            onClick={handleSignOut}
+            className="bg-[#edeea6] text-gray-800 md:text-base text-sm px-3 py-2 md:w-[10rem] w-[4rem] hover:bg-[#ecec87] h-full flex items-center justify-center rounded-lg transition-colors cursor-pointer"
+          >
+            Sign Out
+          </div>
+        )}
       </div>
     </div>
   );
