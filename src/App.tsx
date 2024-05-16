@@ -8,6 +8,7 @@ import Signin from './pages/Signin';
 // import Protected from './contexts/protected';
 import MyRestaurant from './pages/MyRestaurant';
 import Restaurants from './pages/Restaurants';
+import ViewRestaurant from './pages/ViewRestaurant';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             }
           />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/restaurant/:id" element={<ViewRestaurant />} />
         </Routes>
       </div>
     </>

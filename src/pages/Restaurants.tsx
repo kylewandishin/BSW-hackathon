@@ -8,10 +8,11 @@ import picture from '../assets/default_resturant.jpg';
 interface Restaurant {
   id: number;
   name: string;
+  url: string;
   location: string;
 }
 
-let restaurants: Restaurant[] = [];
+let restaurants: Array<Restaurant> = [];
 let count = 0;
 
 const retrieveData = async () => {
@@ -21,6 +22,10 @@ const retrieveData = async () => {
     return {
       id: count++,
       name: restaurantName,
+      url: restaurantName
+        .replace(/\s+/g, '-')
+        .replace(/[\\/]/g, '')
+        .toLowerCase(),
       location: address,
     };
   });
@@ -61,7 +66,7 @@ export default function Resturants() {
                   {restaurant.location}
                 </p>
                 <Link
-                  to={`/restaurant/${restaurant.id}`}
+                  to={`/restaurant/${restaurant.url}`}
                   className="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
                 >
                   View Details
