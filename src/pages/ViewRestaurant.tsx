@@ -3,54 +3,74 @@ import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useLocation } from 'react-router-dom';
 import GaugeChart from 'react-gauge-chart';
+import { useEffect, useState } from 'react';
+
+interface Ingredient {
+  company: string;
+  ingredient: string;
+  lbsPerWeek: string;
+  locallySourced: boolean;
+}
 
 interface Restaurant {
   id: number;
   name: string;
   url: string;
+  score: number;
   location: string;
+  customersPerWeek: number;
+  foodWasteDealing: string;
+  gasOrElectricStove: boolean;
+  greenEnergy: number;
+  ingredients: Array<Ingredient>;
 }
-
-let restaurants: Array<Restaurant> = [];
-let count = 0;
-
-const retrieveData = async () => {
-  const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
-  restaurants = querySnapshot.docs.map((doc) => {
-    const {
-      restaurantName,
-      address,
-      customersPerWeek,
-      foodWasteDealing,
-      gasOrElectricStove,
-      greenEnergy,
-      ingredients,
-    } = doc.data();
-    return {
-      id: count++,
-      score: 1,
-      name: restaurantName,
-      url: restaurantName
-        .replace(/\s+/g, '-')
-        .replace(/[\\/]/g, '')
-        .toLowerCase(),
-      location: address,
-      customersPerWeek,
-      foodWasteDealing,
-      gasOrElectricStove,
-      greenEnergy,
-      ingredients,
-    };
-  });
-};
-
-retrieveData();
 
 export default function ViewRestaurant() {
   const location = useLocation();
-  const restaurant = restaurants.find(
-    (r) => r.url === location.pathname.split('/')[2],
-  );
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
+  let count = 0;
+  useEffect(() => {
+    const retrieveData = async () => {
+      const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
+      const fetchedRestaurants = querySnapshot.docs.map((doc) => {
+        const {
+          restaurantName,
+          address,
+          customersPerWeek,
+          foodWasteDealing,
+          gasOrElectricStove,
+          greenEnergy,
+          ingredients,
+        } = doc.data();
+        return {
+          id: count++,
+          score: 1,
+          name: restaurantName,
+          url: restaurantName
+            .replace(/\s+/g, '-')
+            .replace(/[\\/]/g, '')
+            .toLowerCase(),
+          location: address,
+          customersPerWeek,
+          foodWasteDealing,
+          gasOrElectricStove,
+          greenEnergy,
+          ingredients,
+        };
+      });
+      setRestaurants(fetchedRestaurants);
+    };
+
+    retrieveData();
+  }, []);
+  useEffect(() => {
+    const foundRestaurant = restaurants.find(
+      (r) => r.url === location.pathname.split('/')[2],
+    );
+    setRestaurant(foundRestaurant || null);
+  }, [restaurants, location.pathname]);
+
   return (
     <div className="w-full">
       <header className="py-4">
@@ -125,12 +145,14 @@ export default function ViewRestaurant() {
         </div>
         <div className="flex flex-col items-center">
           <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-            <span className="text-2xl font-bold">{restaurant?.score}/10</span>
+            <span className="text-2xl font-bold">
+              {restaurant?.score || 0}/10
+            </span>
           </div>
           <GaugeChart
             id="gauge-chart2"
             nrOfLevels={10}
-            percent={restaurant?.score / 10}
+            percent={(restaurant?.score || 0) / 10}
             colors={['#FFC371', '#81C784']}
           />
         </div>
