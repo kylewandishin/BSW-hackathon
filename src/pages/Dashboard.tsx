@@ -11,7 +11,7 @@ interface Goal {
 }
 
 const Dashboard: React.FC = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [goals, setGoals] = useState<Array<Goal>>([]);
   const [newGoal, setNewGoal] = useState('');
 
   const handleAddGoal = (e: React.FormEvent) => {

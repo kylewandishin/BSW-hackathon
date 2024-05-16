@@ -10,7 +10,7 @@ interface Restaurant {
   location: string;
 }
 
-const restaurants: Restaurant[] = [
+const restaurants: Array<Restaurant> = [
   {
     id: 1,
     name: 'Green Eatery',

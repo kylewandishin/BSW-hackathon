@@ -28,7 +28,7 @@ function App() {
             // }
           />
           <Route
-            path="/myresturant"
+            path="/myrestaurant"
             element={
               // <Protected>
               <MyResturant />
