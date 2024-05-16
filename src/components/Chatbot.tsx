@@ -12,8 +12,14 @@ const Chatbot: React.FC = () => {
   const [isLarge, setIsLarge] = useState(false); // State to manage the size of the chatbox
   const [prompt, setPrompt] = useState('');
   const [chatHistory, setChatHistory] = useState<Message[]>([
-    { type: 'bot', text: 'Let me help you set some goals to improve your sustainability!' },
-    { type: 'bot', text: 'Or ask me:\n - How do I reduce my water usage?\n - How can I reduce my food waste?\n - How do I begin composting?' }
+    {
+      type: 'bot',
+      text: 'Let me help you set some goals to improve your sustainability!',
+    },
+    {
+      type: 'bot',
+      text: 'Or ask me:\n - How do I reduce my water usage?\n - How can I reduce my food waste?\n - How do I begin composting?',
+    },
   ]); // Initial message
 
   const toggleChatbox = () => {
@@ -27,7 +33,7 @@ const Chatbot: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userMessage: Message = { type: 'user', text: prompt };
-    setChatHistory(prevHistory => [...prevHistory, userMessage]);
+    setChatHistory((prevHistory) => [...prevHistory, userMessage]);
     setPrompt('');
 
     try {
@@ -40,7 +46,7 @@ const Chatbot: React.FC = () => {
       });
       const data = await res.json();
       const botMessage: Message = { type: 'bot', text: data.answer };
-      setChatHistory(prevHistory => [...prevHistory, botMessage]);
+      setChatHistory((prevHistory) => [...prevHistory, botMessage]);
     } catch (error) {
       console.error('Error fetching the API:', error);
     }
@@ -55,10 +61,15 @@ const Chatbot: React.FC = () => {
         <SiChatbot size={30} />
       </button>
       {isOpen && (
-        <div className={`bg-white p-4 rounded shadow-lg mt-2 ${isLarge ? 'w-160 h-192' : 'w-80 h-96'} flex flex-col`}>
+        <div
+          className={`bg-white p-4 rounded shadow-lg mt-2 ${isLarge ? 'w-160 h-192' : 'w-80 h-96'} flex flex-col`}
+        >
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-bold">Chatbot</h2>
-            <button onClick={toggleSize} className="text-gray-500 focus:outline-none">
+            <button
+              onClick={toggleSize}
+              className="text-gray-500 focus:outline-none"
+            >
               {isLarge ? <FaCompress size={20} /> : <FaExpand size={20} />}
             </button>
           </div>
@@ -67,9 +78,11 @@ const Chatbot: React.FC = () => {
               <div
                 key={index}
                 className={`p-2 my-1 rounded max-w-max ${
-                  message.type === 'user' ? 'bg-blue-100 self-end text-right' : 'bg-gray-100 self-start text-left'
+                  message.type === 'user'
+                    ? 'bg-blue-100 self-end text-right'
+                    : 'bg-gray-100 self-start text-left'
                 }`}
-                style={{ whiteSpace: 'pre-wrap' }} 
+                style={{ whiteSpace: 'pre-wrap' }}
               >
                 {message.text}
               </div>
@@ -83,7 +96,10 @@ const Chatbot: React.FC = () => {
               className="w-full p-2 border rounded"
               placeholder="Enter your prompt"
             />
-            <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded w-full">
+            <button
+              type="submit"
+              className="mt-2 p-2 bg-blue-500 text-white rounded w-full"
+            >
               Send
             </button>
           </form>

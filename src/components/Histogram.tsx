@@ -1,8 +1,23 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface HistogramProps {
   labels: string[];
@@ -10,7 +25,11 @@ interface HistogramProps {
   goalValues: number[];
 }
 
-const Histogram: React.FC<HistogramProps> = ({ labels, companyValues, goalValues }) => {
+const Histogram: React.FC<HistogramProps> = ({
+  labels,
+  companyValues,
+  goalValues,
+}) => {
   const data = {
     labels,
     datasets: [

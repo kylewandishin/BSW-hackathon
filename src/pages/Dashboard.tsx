@@ -23,11 +23,15 @@ const Dashboard: React.FC = () => {
   };
 
   const handleToggleGoal = (id: number) => {
-    setGoals(goals.map(goal => (goal.id === id ? { ...goal, completed: !goal.completed } : goal)));
+    setGoals(
+      goals.map((goal) =>
+        goal.id === id ? { ...goal, completed: !goal.completed } : goal,
+      ),
+    );
   };
 
   const handleDeleteGoal = (id: number) => {
-    setGoals(goals.filter(goal => goal.id !== id));
+    setGoals(goals.filter((goal) => goal.id !== id));
   };
 
   const labels = ['Metric 1', 'Metric 2', 'Metric 3', 'Metric 4', 'Metric 5']; // Replace with actual labels
@@ -37,7 +41,6 @@ const Dashboard: React.FC = () => {
   return (
     <div className="pt-[5rem] container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Dashboard</h1>
-
       {/* New Smaller Line Graph Section */}
       <div className="mb-4">
         <h2 className="text-2xl font-bold mb-2 text-center">Temp</h2>
@@ -45,7 +48,6 @@ const Dashboard: React.FC = () => {
           <LineGraph labels={labels} data={companyValues} />
         </div>
       </div>
-
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/2 p-2">
           <h2 className="text-2xl font-bold mb-2">Goals</h2>
@@ -57,12 +59,15 @@ const Dashboard: React.FC = () => {
               className="flex-grow p-2 border rounded mb-2 md:mb-0"
               placeholder="Add a new goal"
             />
-            <button type="submit" className="p-2 bg-green-500 text-white rounded ml-2">
+            <button
+              type="submit"
+              className="p-2 bg-green-500 text-white rounded ml-2"
+            >
               Add Goal
             </button>
           </form>
           <ul className="text-left">
-            {goals.map(goal => (
+            {goals.map((goal) => (
               <li key={goal.id} className="flex items-center mb-2">
                 <input
                   type="checkbox"
@@ -70,8 +75,15 @@ const Dashboard: React.FC = () => {
                   onChange={() => handleToggleGoal(goal.id)}
                   className="mr-2"
                 />
-                <span className={`flex-1 ${goal.completed ? 'line-through' : ''}`}>{goal.text}</span>
-                <button onClick={() => handleDeleteGoal(goal.id)} className="ml-2 text-red-500">
+                <span
+                  className={`flex-1 ${goal.completed ? 'line-through' : ''}`}
+                >
+                  {goal.text}
+                </span>
+                <button
+                  onClick={() => handleDeleteGoal(goal.id)}
+                  className="ml-2 text-red-500"
+                >
                   Delete
                 </button>
               </li>
@@ -80,10 +92,13 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="w-full md:w-1/2 p-2">
           <h2 className="text-2xl font-bold mb-2">Graph</h2>
-          <Histogram labels={labels} companyValues={companyValues} goalValues={goalValues} />
+          <Histogram
+            labels={labels}
+            companyValues={companyValues}
+            goalValues={goalValues}
+          />
         </div>
       </div>
-
       <Chatbot /> {/* Add the Chatbot component */}
     </div>
   );

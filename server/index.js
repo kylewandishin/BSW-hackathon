@@ -34,8 +34,8 @@ app.post('/call-bedrock', async (req, res) => {
       top_k: 250,
       top_p: 1,
       stop_sequences: ['\n\nHuman:'],
-      anthropic_version: 'bedrock-2023-05-31'
-    })
+      anthropic_version: 'bedrock-2023-05-31',
+    }),
   };
 
   try {
