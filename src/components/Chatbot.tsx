@@ -64,7 +64,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ formData }) => {
         onClick={toggleChatbox}
         className="bg-blue-500 text-white p-3 rounded-full shadow-lg focus:outline-none"
       >
-        <SiChatbot size={30} />
+        <SiChatbot size={40} />
       </button>
       {isOpen && (
         <div

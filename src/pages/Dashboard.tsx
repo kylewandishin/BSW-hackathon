@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import Histogram from '../components/Histogram';
 import LineGraph from '../components/LineGraph';
+import CircularProgressBar from '../components/circularprogressbar.tsx';
 import Chatbot from '../components/Chatbot';
 import { db, auth } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -32,6 +33,7 @@ interface FormData {
   greenEnergy: number;
   veganVegetarianOptions: boolean;
   customersPerWeek: string;
+  sustainabilityScore?: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -115,25 +117,41 @@ const Dashboard: React.FC = () => {
     : [0, 0, 0, 0];
   const goalValues = [500, 300, 100, 150]; // Recommended sustainable values
 
+  // Mock data for line graph
+  const lineGraphDataPoints = [65, 65, 66, 70, 70, 70, 74, 70, 73, 72];
+
   return (
     <div className="pt-[5rem] container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Dashboard</h1>
-      <div className="mt-4">
+      <div className="mt-4 bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-2">Recommendations</h2>
         <p>{recommendations}</p>
       </div>
       {/* New Wider Line Graph Section */}
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold mb-2 text-center">Weekly Metrics</h2>
-        <div className="w-full h-96">
-          <LineGraph
-            labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)}
-            dataPoints={companyValues}
+      <div className="mb-4 flex flex-wrap">
+        <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-2 text-center">
+            Weekly Metrics
+          </h2>
+          <div className="w-full h-96">
+            <LineGraph
+              labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)}
+              dataPoints={lineGraphDataPoints}
+            />
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md flex flex-col justify-center items-center">
+          <h2 className="text-2xl font-bold mb-2 text-center">
+            Sustainability Score
+          </h2>
+          <CircularProgressBar
+            value={formData?.sustainabilityScore || 0}
+            text={`${formData?.sustainabilityScore || 0}%`}
           />
         </div>
       </div>
       <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-2">Goals</h2>
           <form onSubmit={handleAddGoal} className="mb-4 flex items-center">
             <input
@@ -174,7 +192,7 @@ const Dashboard: React.FC = () => {
             ))}
           </ul>
         </div>
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-2">Graph</h2>
           <Histogram
             labels={labels}
@@ -183,7 +201,9 @@ const Dashboard: React.FC = () => {
           />
         </div>
       </div>
-      <Chatbot formData={formData} /> {/* Pass formData to Chatbot */}
+      <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+        <Chatbot formData={formData} /> {/* Pass formData to Chatbot */}
+      </div>
     </div>
   );
 };
