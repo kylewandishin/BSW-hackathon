@@ -4,6 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { useLocation } from 'react-router-dom';
 // import { useEffect } from 'react';
 import default_resturant from '../assets/default_resturant.jpg';
+import { useEffect } from 'react';
 
 interface Restaurant {
   id: number;
@@ -18,7 +19,15 @@ let count = 0;
 const retrieveData = async () => {
   const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
   restaurants = querySnapshot.docs.map((doc) => {
-    const { restaurantName, address } = doc.data();
+    const {
+      restaurantName,
+      address,
+      customersPerWeek,
+      foodWasteDealing,
+      gasOrElectricStove,
+      greenEnergy,
+      ingredients,
+    } = doc.data();
     return {
       id: count++,
       name: restaurantName,
@@ -27,6 +36,11 @@ const retrieveData = async () => {
         .replace(/[\\/]/g, '')
         .toLowerCase(),
       location: address,
+      customersPerWeek,
+      foodWasteDealing,
+      gasOrElectricStove,
+      greenEnergy,
+      ingredients,
     };
   });
 };
@@ -56,9 +70,7 @@ export default function ViewRestaurant() {
               alt="Restaurant Name"
               className="w-full h-48 object-cover"
             />
-            <div className="p-4">
-              
-            </div>
+            <div className="p-4"></div>
           </div>
         </div>
       </main>
