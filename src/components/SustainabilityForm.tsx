@@ -10,7 +10,7 @@ interface Ingredient {
   lbsPerWeek: string;
   locallySourced: boolean;
 }
-//TODO: update past data
+
 interface FormData {
   restaurantName: string;
   address: string;
@@ -25,7 +25,8 @@ interface FormData {
   greenEnergy: number;
   veganVegetarianOptions: boolean;
   customersPerWeek: string;
-  userId?: string; // Added userId to the form data
+  userId?: string;
+  sustainabilityScore?: number;
 }
 
 const SustainabilityForm: React.FC = () => {
@@ -98,9 +99,29 @@ const SustainabilityForm: React.FC = () => {
     e.preventDefault();
     if (user) {
       try {
-        const userDoc = doc(collection(db, 'sustainabilityForms'), user.uid);
+        const userDoc = doc(collection(db, 'sustainabilityForm'), user.uid);
         await setDoc(userDoc, { ...formData, userId: user.uid });
-        alert('Data saved successfully');
+
+        // Call the new endpoint to get the sustainability score
+        const response = await fetch('http://localhost:5001/get-sustainability-score', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ formData }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json();
+        const sustainabilityScore = responseData.score;
+
+        // Save the sustainability score to Firebase
+        await setDoc(userDoc, { ...formData, sustainabilityScore, userId: user.uid });
+
+        alert(`Data saved successfully. Sustainability score: ${sustainabilityScore}`);
         console.log('formData:', JSON.stringify(formData, null, 2));
       } catch (error) {
         console.error('Error saving data:', error);

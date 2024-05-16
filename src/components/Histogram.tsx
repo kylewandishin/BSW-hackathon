@@ -4,15 +4,18 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  LogarithmicScale,
   BarElement,
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  LogarithmicScale,
   BarElement,
   Title,
   Tooltip,
@@ -46,7 +49,7 @@ const Histogram: React.FC<HistogramProps> = ({
     ],
   };
 
-  const options = {
+  const options: ChartOptions<'bar'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -65,6 +68,7 @@ const Histogram: React.FC<HistogramProps> = ({
         },
       },
       y: {
+        type: 'logarithmic', // Use the specific string literal type
         title: {
           display: true,
           text: 'Values',
