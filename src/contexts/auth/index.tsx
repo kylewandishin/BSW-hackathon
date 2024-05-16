@@ -1,4 +1,10 @@
-import { useContext, createContext, useEffect, useState, ReactNode } from 'react';
+import {
+  useContext,
+  createContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 import {
   GoogleAuthProvider,
   signInWithRedirect,
