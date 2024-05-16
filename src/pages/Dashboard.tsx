@@ -16,7 +16,12 @@ interface Goal {
 interface FormData {
   restaurantName: string;
   address: string;
-  ingredients: { ingredient: string; company: string; lbsPerWeek: string; locallySourced: boolean; }[];
+  ingredients: {
+    ingredient: string;
+    company: string;
+    lbsPerWeek: string;
+    locallySourced: boolean;
+  }[];
   recycle: boolean;
   takeoutContainers: string;
   utensils: string;
@@ -36,19 +41,22 @@ const Dashboard: React.FC = () => {
   const [recommendations, setRecommendations] = useState<string>('');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser: User | null) => {
-      if (currentUser) {
-        const userDoc = doc(db, 'sustainabilityForm', currentUser.uid);
-        const docSnap = await getDoc(userDoc);
-        if (docSnap.exists()) {
-          const data = docSnap.data() as FormData;
-          setFormData(data);
-          await sendFormDataToServer(data);
-        } else {
-          console.log("No form data found for user.");
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (currentUser: User | null) => {
+        if (currentUser) {
+          const userDoc = doc(db, 'sustainabilityForm', currentUser.uid);
+          const docSnap = await getDoc(userDoc);
+          if (docSnap.exists()) {
+            const data = docSnap.data() as FormData;
+            setFormData(data);
+            await sendFormDataToServer(data);
+          } else {
+            console.log('No form data found for user.');
+          }
         }
-      }
-    });
+      },
+    );
 
     return () => unsubscribe();
   }, []);
@@ -60,7 +68,9 @@ const Dashboard: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: `Give me recommendations to be more sustainable given data about my restaurant: ${JSON.stringify(data)}` }),
+        body: JSON.stringify({
+          prompt: `Give me recommendations to be more sustainable given data about my restaurant: ${JSON.stringify(data)}`,
+        }),
       });
       const responseData = await res.json();
       setRecommendations(responseData.answer);
@@ -89,9 +99,19 @@ const Dashboard: React.FC = () => {
     setGoals(goals.filter((goal) => goal.id !== id));
   };
 
-  const labels = ['Water Usage (Gallons)', 'Power Usage (kWh)', 'Green Energy (%)', 'Customers per Week'];
+  const labels = [
+    'Water Usage (Gallons)',
+    'Power Usage (kWh)',
+    'Green Energy (%)',
+    'Customers per Week',
+  ];
   const companyValues = formData
-    ? [parseInt(formData.waterUsage), parseInt(formData.powerUsage), formData.greenEnergy, parseInt(formData.customersPerWeek)]
+    ? [
+        parseInt(formData.waterUsage),
+        parseInt(formData.powerUsage),
+        formData.greenEnergy,
+        parseInt(formData.customersPerWeek),
+      ]
     : [0, 0, 0, 0];
   const goalValues = [500, 300, 100, 150]; // Recommended sustainable values
 
@@ -106,7 +126,10 @@ const Dashboard: React.FC = () => {
       <div className="mb-4">
         <h2 className="text-2xl font-bold mb-2 text-center">Weekly Metrics</h2>
         <div className="w-full h-96">
-          <LineGraph labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)} dataPoints={companyValues} />
+          <LineGraph
+            labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)}
+            dataPoints={companyValues}
+          />
         </div>
       </div>
       <div className="flex flex-wrap">
@@ -136,7 +159,9 @@ const Dashboard: React.FC = () => {
                   onChange={() => handleToggleGoal(goal.id)}
                   className="mr-2"
                 />
-                <span className={`flex-1 ${goal.completed ? 'line-through' : ''}`}>
+                <span
+                  className={`flex-1 ${goal.completed ? 'line-through' : ''}`}
+                >
                   {goal.text}
                 </span>
                 <button

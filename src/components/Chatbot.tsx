@@ -46,7 +46,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ formData }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: `${prompt}. Here is the data about my restaurant: ${JSON.stringify(formData)}` }),
+        body: JSON.stringify({
+          prompt: `${prompt}. Here is the data about my restaurant: ${JSON.stringify(formData)}`,
+        }),
       });
       const data = await res.json();
       const botMessage: Message = { type: 'bot', text: data.answer };

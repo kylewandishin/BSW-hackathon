@@ -18,7 +18,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 interface HistogramProps {
@@ -27,7 +27,11 @@ interface HistogramProps {
   goalValues: number[];
 }
 
-const Histogram: React.FC<HistogramProps> = ({ labels, companyValues, goalValues }) => {
+const Histogram: React.FC<HistogramProps> = ({
+  labels,
+  companyValues,
+  goalValues,
+}) => {
   const data = {
     labels,
     datasets: [
