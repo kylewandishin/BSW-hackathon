@@ -142,7 +142,7 @@ Waste Management (20 points)
     const buffer = Buffer.from(bedrockReturn.body);
     const responseString = buffer.toString('utf-8');
     const responseJSON = JSON.parse(responseString);
-    const score = responseJSON.completion; // Adjust based on actual response structure
+    const score = responseJSON.completion.match(/\[(\d+)\]/)[1]; // Extract the number from brackets
     console.log('Received response from Bedrock:', score);
     res.json({ score });
   } catch (error) {
