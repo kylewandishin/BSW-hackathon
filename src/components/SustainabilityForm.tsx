@@ -1,7 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
-import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { db, auth } from '../firebase'; // Ensure you import auth
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 interface Ingredient {
   ingredient: string;
@@ -11,34 +12,47 @@ interface Ingredient {
 }
 
 interface FormData {
-  restaurantName: string; // Add restaurantName field
+  restaurantName: string;
+  address: string;
   ingredients: Ingredient[];
   recycle: boolean;
   takeoutContainers: string;
-  utensils: string; // Add utensils field
+  utensils: string;
   foodWasteDealing: boolean;
   waterUsage: string;
   gasOrElectricStove: boolean;
   powerUsage: string;
   greenEnergy: number;
   veganVegetarianOptions: boolean;
+  customersPerWeek: string;
+  userId?: string; // Added userId to the form data
 }
 
 const SustainabilityForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    restaurantName: '', // Initialize restaurantName
+    restaurantName: '',
+    address: '',
     ingredients: [
       { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false },
     ],
     recycle: false,
     takeoutContainers: '',
-    utensils: '', // Initialize utensils
+    utensils: '',
     foodWasteDealing: false,
     waterUsage: '',
     gasOrElectricStove: false,
     powerUsage: '',
     greenEnergy: 0,
     veganVegetarianOptions: false,
+    customersPerWeek: '',
+  });
+
+  const [user, setUser] = useState<any>(null);
+
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+      setUser(currentUser);
+    }
   });
 
   const handleChange = (
@@ -82,13 +96,18 @@ const SustainabilityForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, 'sustainabilityForm'), formData);
-      alert('Data saved successfully');
-      console.log('formData:', JSON.stringify(formData, null, 2));
-    } catch (error) {
-      console.error('Error saving data:', error);
-      alert('Failed to save data');
+    if (user) {
+      try {
+        const userDoc = doc(collection(db, 'sustainabilityForms'), user.uid);
+        await setDoc(userDoc, { ...formData, userId: user.uid });
+        alert('Data saved successfully');
+        console.log('formData:', JSON.stringify(formData, null, 2));
+      } catch (error) {
+        console.error('Error saving data:', error);
+        alert('Failed to save data');
+      }
+    } else {
+      alert('You must be logged in to submit the form');
     }
   };
 
@@ -104,6 +123,19 @@ const SustainabilityForm: React.FC = () => {
             type="text"
             name="restaurantName"
             value={formData.restaurantName}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          Address
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
             onChange={handleChange}
             className="w-full p-2 border rounded-lg"
           />
@@ -301,6 +333,19 @@ const SustainabilityForm: React.FC = () => {
             checked={formData.veganVegetarianOptions}
             onChange={handleChange}
             className="ml-2"
+          />
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          Customers/week
+          <input
+            type="text"
+            name="customersPerWeek"
+            value={formData.customersPerWeek}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
           />
         </label>
       </div>

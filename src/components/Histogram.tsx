@@ -57,9 +57,27 @@ const Histogram: React.FC<HistogramProps> = ({
         text: 'Company Values vs Goal Values',
       },
     },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Metrics',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Values',
+        },
+      },
+    },
   };
 
-  return <Bar data={data} options={options} />;
+  return (
+    <div className="w-full h-96">
+      <Bar data={data} options={options} />
+    </div>
+  );
 };
 
 export default Histogram;

@@ -1,41 +1,68 @@
-// src/components/LineGraph.tsx
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
-  LineElement,
-  PointElement,
-  LinearScale,
   CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
 } from 'chart.js';
 
-ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface LineGraphProps {
   labels: string[];
-  data: number[];
+  dataPoints: number[];
 }
 
-const LineGraph: React.FC<LineGraphProps> = ({ labels, data }) => {
-  const graphData = {
-    labels: labels,
+const LineGraph: React.FC<LineGraphProps> = ({ labels, dataPoints }) => {
+  const data = {
+    labels,
     datasets: [
       {
-        label: 'Company Data',
-        data: data,
+        label: 'Company Values',
+        data: dataPoints,
+        fill: false,
+        backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        fill: true,
       },
     ],
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Weeks',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Score',
+        },
+      },
+    },
   };
 
-  return <Line data={graphData} options={options} />;
+  return (
+    <div className="w-full h-96">
+      <Line data={data} options={options} />
+    </div>
+  );
 };
 
 export default LineGraph;
