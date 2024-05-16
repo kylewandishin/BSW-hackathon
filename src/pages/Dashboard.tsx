@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css'; // Ensure you have TailwindCSS installed and configured
-import Histogram from '../components/Histogram'; // Import the Histogram component
-import LineGraph from '../components/LineGraph'; // Import the LineGraph component
-import Chatbot from '../components/Chatbot'; // Import the Chatbot component
+import React, { useEffect, useState } from 'react';
+import 'tailwindcss/tailwind.css';
+import Histogram from '../components/Histogram';
+import LineGraph from '../components/LineGraph';
+import Chatbot from '../components/Chatbot';
+import { db, auth } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 interface Goal {
   id: number;
@@ -10,9 +13,40 @@ interface Goal {
   completed: boolean;
 }
 
+interface FormData {
+  restaurantName: string;
+  address: string;
+  ingredients: { ingredient: string; company: string; lbsPerWeek: string; locallySourced: boolean; }[];
+  recycle: boolean;
+  takeoutContainers: string;
+  utensils: string;
+  foodWasteDealing: boolean;
+  waterUsage: string;
+  gasOrElectricStove: boolean;
+  powerUsage: string;
+  greenEnergy: number;
+  veganVegetarianOptions: boolean;
+  customersPerWeek: string;
+}
+
 const Dashboard: React.FC = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [newGoal, setNewGoal] = useState('');
+  const [formData, setFormData] = useState<FormData | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser: User | null) => {
+      if (currentUser) {
+        const userDoc = doc(db, 'sustainabilityForms', currentUser.uid);
+        const docSnap = await getDoc(userDoc);
+        if (docSnap.exists()) {
+          setFormData(docSnap.data() as FormData);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,18 +68,20 @@ const Dashboard: React.FC = () => {
     setGoals(goals.filter((goal) => goal.id !== id));
   };
 
-  const labels = ['Metric 1', 'Metric 2', 'Metric 3', 'Metric 4', 'Metric 5']; // Replace with actual labels
-  const companyValues = [10, 20, 30, 40, 50]; // Replace with actual company values
-  const goalValues = [15, 25, 35, 45, 55]; // Replace with actual goal values
+  const labels = ['Water Usage (Gallons)', 'Power Usage (kWh)', 'Green Energy (%)', 'Customers per Week'];
+  const companyValues = formData
+    ? [parseInt(formData.waterUsage), parseInt(formData.powerUsage), formData.greenEnergy, parseInt(formData.customersPerWeek)]
+    : [0, 0, 0, 0];
+  const goalValues = [500, 300, 100, 150]; // Recommended sustainable values
 
   return (
     <div className="pt-[5rem] container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Dashboard</h1>
-      {/* New Smaller Line Graph Section */}
+      {/* New Wider Line Graph Section */}
       <div className="mb-4">
-        <h2 className="text-2xl font-bold mb-2 text-center">Temp</h2>
-        <div className="w-full h-64">
-          <LineGraph labels={labels} data={companyValues} />
+        <h2 className="text-2xl font-bold mb-2 text-center">Weekly Metrics</h2>
+        <div className="w-full h-96">
+          <LineGraph labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)} dataPoints={companyValues} />
         </div>
       </div>
       <div className="flex flex-wrap">
@@ -75,9 +111,7 @@ const Dashboard: React.FC = () => {
                   onChange={() => handleToggleGoal(goal.id)}
                   className="mr-2"
                 />
-                <span
-                  className={`flex-1 ${goal.completed ? 'line-through' : ''}`}
-                >
+                <span className={`flex-1 ${goal.completed ? 'line-through' : ''}`}>
                   {goal.text}
                 </span>
                 <button

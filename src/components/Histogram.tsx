@@ -16,7 +16,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 interface HistogramProps {
@@ -25,11 +25,7 @@ interface HistogramProps {
   goalValues: number[];
 }
 
-const Histogram: React.FC<HistogramProps> = ({
-  labels,
-  companyValues,
-  goalValues,
-}) => {
+const Histogram: React.FC<HistogramProps> = ({ labels, companyValues, goalValues }) => {
   const data = {
     labels,
     datasets: [
@@ -57,9 +53,23 @@ const Histogram: React.FC<HistogramProps> = ({
         text: 'Company Values vs Goal Values',
       },
     },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Metrics',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Values',
+        },
+      },
+    },
   };
 
-  return <Bar data={data} options={options} />;
+  return <div className="w-full h-96"><Bar data={data} options={options} /></div>;
 };
 
 export default Histogram;
