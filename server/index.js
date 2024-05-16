@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import the cors middleware
+const cors = require('cors');
 const AWS = require('aws-sdk');
 require('dotenv').config();
 
@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 app.use(bodyParser.json());
-app.use(cors()); // Use the cors middleware
+app.use(cors());
 
 // Configure AWS SDK
 AWS.config.update({
@@ -21,14 +21,16 @@ AWS.config.update({
 const bedrock = new AWS.BedrockRuntime();
 
 app.post('/call-bedrock', async (req, res) => {
-  const { prompt } = req.body;
+  const { prompt, formData } = req.body;
+
+  const fullPrompt = `User question: ${prompt}\n\nRestaurant data: ${JSON.stringify(formData, null, 2)}\n\nGive me recommendations to be more sustainable based on the above information.`;
 
   const params = {
     modelId: 'anthropic.claude-v2',
     contentType: 'application/json',
     accept: 'application/json',
     body: JSON.stringify({
-      prompt: `\n\nHuman: ${prompt}\n\nAssistant:`,
+      prompt: `\n\nHuman: ${fullPrompt}\n\nAssistant:`,
       max_tokens_to_sample: 100,
       temperature: 0.5,
       top_k: 250,
@@ -39,11 +41,13 @@ app.post('/call-bedrock', async (req, res) => {
   };
 
   try {
+    console.log('Sending request to Bedrock with params:', params);
     const bedrockReturn = await bedrock.invokeModel(params).promise();
     const buffer = Buffer.from(bedrockReturn.body);
     const responseString = buffer.toString('utf-8');
     const responseJSON = JSON.parse(responseString);
     const answer = responseJSON.completion;
+    console.log('Received response from Bedrock:', answer);
     res.json({ answer });
   } catch (error) {
     console.error('Error querying the AI model:', error);
