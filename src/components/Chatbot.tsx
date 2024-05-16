@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { SiChatbot } from 'react-icons/si'; // Import the chatbot icon
-import { FaExpand, FaCompress } from 'react-icons/fa'; // Import expand/compress icons
+import { SiChatbot } from 'react-icons/si';
+import { FaExpand, FaCompress } from 'react-icons/fa';
 
 interface Message {
   type: 'user' | 'bot';
   text: string;
 }
 
-const Chatbot: React.FC = () => {
+interface ChatbotProps {
+  formData: any; // Adjust the type according to your formData structure
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ formData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLarge, setIsLarge] = useState(false); // State to manage the size of the chatbox
+  const [isLarge, setIsLarge] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [chatHistory, setChatHistory] = useState<Message[]>([
     {
@@ -20,7 +24,7 @@ const Chatbot: React.FC = () => {
       type: 'bot',
       text: 'Or ask me:\n - How do I reduce my water usage?\n - How can I reduce my food waste?\n - How do I begin composting?',
     },
-  ]); // Initial message
+  ]);
 
   const toggleChatbox = () => {
     setIsOpen(!isOpen);
@@ -42,7 +46,7 @@ const Chatbot: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt: `${prompt}. Here is the data about my restaurant: ${JSON.stringify(formData)}` }),
       });
       const data = await res.json();
       const botMessage: Message = { type: 'bot', text: data.answer };
