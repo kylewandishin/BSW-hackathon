@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
 import 'tailwindcss/tailwind.css';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -19,13 +18,15 @@ export default function Leaderboard() {
       const restaurantList: Restaurant[] = [];
       let count = 1;
       querySnapshot.forEach((doc) => {
-        const { restaurantName, score } = doc.data();
+        const { restaurantName, sustainabilityScore } = doc.data();
         restaurantList.push({
           id: count++,
           name: restaurantName,
-          score: score,
+          score: Number(sustainabilityScore), // Parse score as number
         });
       });
+      // Sort restaurants by score in descending order
+      restaurantList.sort((a, b) => b.score - a.score);
       setRestaurants(restaurantList);
     };
 
@@ -57,7 +58,7 @@ export default function Leaderboard() {
                 className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
               >
                 <td className="py-4 px-5 border-b border-gray-200 text-sm">
-                  {restaurant.id}
+                  {index + 1} {/* Display rank */}
                 </td>
                 <td className="py-4 px-5 border-b border-gray-200 text-sm">
                   {restaurant.name}
