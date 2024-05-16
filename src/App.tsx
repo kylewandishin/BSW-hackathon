@@ -6,8 +6,8 @@ import NotFound from './pages/NotFound';
 import Topbar from './components/navbar';
 import Signin from './pages/Signin';
 // import Protected from './contexts/protected';
-import MyResturant from './pages/MyResturant';
-import Resturants from './pages/Resturants';
+import MyRestaurant from './pages/MyRestaurant';
+import Restaurants from './pages/Restaurants';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/resturants" element={<Resturants />} />
+          <Route path="/restaurants" element={<Restaurants />} />
           <Route
             path="/dashboard"
             element={<Dashboard />}
@@ -31,7 +31,7 @@ function App() {
             path="/myrestaurant"
             element={
               // <Protected>
-              <MyResturant />
+              <MyRestaurant />
               // </Protected>
             }
           />
