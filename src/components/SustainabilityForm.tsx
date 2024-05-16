@@ -10,7 +10,7 @@ interface Ingredient {
   lbsPerWeek: string;
   locallySourced: boolean;
 }
-
+//TODO: update past data
 interface FormData {
   restaurantName: string;
   address: string;
