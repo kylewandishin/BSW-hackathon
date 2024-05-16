@@ -2522,6 +2522,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-gauge-chart@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.npmjs.org/@types/react-gauge-chart/-/react-gauge-chart-0.4.3.tgz"
+  integrity sha512-dKnH6V6KY8M10x9tKTyJFCtWHjaiIu4ot9xfOzrTy370FCneq0squ0TxErffdgXr76p05IOM1v5LQQLnp3BWwg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.10":
   version "4.4.10"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.10.tgz"

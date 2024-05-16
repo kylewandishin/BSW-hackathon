@@ -22,8 +22,8 @@ ChartJS.register(
 );
 
 interface LineGraphProps {
-  labels: string[];
-  dataPoints: number[];
+  labels: Array<string>;
+  dataPoints: Array<number>;
 }
 
 const LineGraph: React.FC<LineGraphProps> = ({ labels, dataPoints }) => {

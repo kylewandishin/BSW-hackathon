@@ -10,12 +10,12 @@ interface Restaurant {
 }
 
 export default function Leaderboard() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
 
   useEffect(() => {
     const retrieveData = async () => {
       const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
-      const restaurantList: Restaurant[] = [];
+      const restaurantList: Array<Restaurant> = [];
       let count = 1;
       querySnapshot.forEach((doc) => {
         const { restaurantName, sustainabilityScore } = doc.data();

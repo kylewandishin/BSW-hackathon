@@ -9,8 +9,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
 } from 'chart.js';
+import type { ChartOptions } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -23,9 +23,9 @@ ChartJS.register(
 );
 
 interface HistogramProps {
-  labels: string[];
-  companyValues: number[];
-  goalValues: number[];
+  labels: Array<string>;
+  companyValues: Array<number>;
+  goalValues: Array<number>;
 }
 
 const Histogram: React.FC<HistogramProps> = ({

@@ -11,6 +11,7 @@ import { auth } from '../firebase/index';
 import { useEffect, useState } from 'react';
 
 export default function Topbar() {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {

@@ -6,7 +6,8 @@ import CircularProgressBar from '../components/circularprogressbar.tsx';
 import Chatbot from '../components/Chatbot';
 import { db, auth } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 
 interface Goal {
   id: number;
@@ -14,15 +15,17 @@ interface Goal {
   completed: boolean;
 }
 
+interface Ingredient {
+  ingredient: string;
+  company: string;
+  lbsPerWeek: string;
+  locallySourced: boolean;
+}
+
 interface FormData {
   restaurantName: string;
   address: string;
-  ingredients: {
-    ingredient: string;
-    company: string;
-    lbsPerWeek: string;
-    locallySourced: boolean;
-  }[];
+  ingredients: Array<Ingredient>;
   recycle: boolean;
   takeoutContainers: string;
   utensils: string;
@@ -37,7 +40,7 @@ interface FormData {
 }
 
 const Dashboard: React.FC = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [goals, setGoals] = useState<Array<Goal>>([]);
   const [newGoal, setNewGoal] = useState('');
   const [formData, setFormData] = useState<FormData | null>(null);
   const [recommendations, setRecommendations] = useState<string>('');

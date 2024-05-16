@@ -1,10 +1,5 @@
-import {
-  useContext,
-  createContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import { useContext, createContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import {
   GoogleAuthProvider,
   signInWithRedirect,
@@ -17,6 +12,7 @@ type AuthContextProps = {
   children: ReactNode;
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const AuthContext = createContext<any>(null);
 
 export const AuthContextProvider = (props: AuthContextProps) => {

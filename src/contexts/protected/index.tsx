@@ -7,7 +7,7 @@ type ProtectedProps = {
 
 const Protected = (props: ProtectedProps) => {
   const { children } = props;
-  const { user } = useAuth() as { user: any }; // Use useAuth instead of UserAuth
+  const { user } = useAuth() as { user: any }; /* eslint-disable-line */
   if (!user || Object.keys(user).length === 0) {
     return <Navigate to="/" />;
   }

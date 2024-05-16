@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
 import { db, auth } from '../firebase'; // Ensure you import auth
 import { collection, doc, setDoc } from 'firebase/firestore';
@@ -14,7 +15,7 @@ interface Ingredient {
 interface FormData {
   restaurantName: string;
   address: string;
-  ingredients: Ingredient[];
+  ingredients: Array<Ingredient>;
   recycle: boolean;
   takeoutContainers: string;
   utensils: string;
@@ -47,7 +48,7 @@ const SustainabilityForm: React.FC = () => {
     veganVegetarianOptions: false,
     customersPerWeek: '',
   });
-
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [user, setUser] = useState<any>(null);
 
   onAuthStateChanged(auth, (currentUser) => {
@@ -239,7 +240,7 @@ const SustainabilityForm: React.FC = () => {
       </fieldset>
 
       <div className="mb-4">
-        <label className="block mb-2 flex items-center">
+        <label className="mb-2 flex items-center">
           Do you recycle?
           <input
             type="checkbox"

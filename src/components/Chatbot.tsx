@@ -8,6 +8,7 @@ interface Message {
 }
 
 interface ChatbotProps {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   formData: any; // Adjust the type according to your formData structure
 }
 
@@ -15,7 +16,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ formData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLarge, setIsLarge] = useState(false);
   const [prompt, setPrompt] = useState('');
-  const [chatHistory, setChatHistory] = useState<Message[]>([
+  const [chatHistory, setChatHistory] = useState<Array<Message>>([
     {
       type: 'bot',
       text: 'Let me help you set some goals to improve your sustainability!',
