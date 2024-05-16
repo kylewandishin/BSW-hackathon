@@ -78,12 +78,12 @@ export default function Topbar() {
             </Link>
           </>
         )}
-         <Link
-              to="/leaderboard"
-              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
-            >
-              Leaderboard
-            </Link>
+        <Link
+          to="/leaderboard"
+          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
+        >
+          Leaderboard
+        </Link>
       </div>
       <div className="flex items-center space-x-2">
         {!user ? (

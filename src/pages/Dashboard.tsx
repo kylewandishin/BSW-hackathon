@@ -130,7 +130,9 @@ const Dashboard: React.FC = () => {
       {/* New Wider Line Graph Section */}
       <div className="mb-4 flex flex-wrap">
         <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-2 text-center">Weekly Metrics</h2>
+          <h2 className="text-2xl font-bold mb-2 text-center">
+            Weekly Metrics
+          </h2>
           <div className="w-full h-96">
             <LineGraph
               labels={Array.from({ length: 10 }, (_, i) => `Week ${i + 1}`)}
@@ -139,7 +141,9 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <div className="w-full md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-md flex flex-col justify-center items-center">
-          <h2 className="text-2xl font-bold mb-2 text-center">Sustainability Score</h2>
+          <h2 className="text-2xl font-bold mb-2 text-center">
+            Sustainability Score
+          </h2>
           <CircularProgressBar
             value={formData?.sustainabilityScore || 0}
             text={`${formData?.sustainabilityScore || 0}%`}
