@@ -1,31 +1,37 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
 import 'tailwindcss/tailwind.css';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import picture from '../assets/default_resturant.jpg';
 
 interface Restaurant {
   id: number;
   name: string;
-  description: string;
-  imageUrl: string;
   location: string;
 }
 
-const restaurants: Restaurant[] = [
-  {
-    id: 1,
-    name: 'Green Eatery',
-    description: 'A cozy place offering organic and locally sourced meals.',
-    imageUrl: 'https://via.placeholder.com/150',
-    location: '123 Green St, Springfield',
-  },
-  {
-    id: 2,
-    name: 'Eco Diner',
-    description: 'Sustainable dining with a focus on plant-based dishes.',
-    imageUrl: 'https://via.placeholder.com/150',
-    location: '456 Eco Ave, Springfield',
-  },
-];
+let restaurants: Restaurant[] = [];
+let count = 0;
+
+const retrieveData = async () => {
+  const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
+  restaurants = querySnapshot.docs.map(doc => {
+    const { restaurantName, address } = doc.data();
+    return {
+      id: count++,
+      name: restaurantName,
+      location: address
+    };
+
+  });
+}
+
+retrieveData();
+
+for (let i = 0; i < restaurants.length; i++) {
+  console.log(restaurants[i]);
+}
 
 export default function Resturants() {
   return (
@@ -44,7 +50,7 @@ export default function Resturants() {
               className="bg-white shadow-lg rounded-lg overflow-hidden"
             >
               <img
-                src={restaurant.imageUrl}
+                src={picture}
                 alt={restaurant.name}
                 className="w-full h-48 object-cover"
               />
@@ -52,7 +58,6 @@ export default function Resturants() {
                 <h2 className="text-2xl font-bold text-gray-800">
                   {restaurant.name}
                 </h2>
-                <p className="text-gray-600">{restaurant.description}</p>
                 <p className="text-gray-800 mt-2 font-semibold">
                   {restaurant.location}
                 </p>
