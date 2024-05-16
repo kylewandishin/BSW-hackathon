@@ -33,9 +33,9 @@ const retrieveData = async () => {
 
 retrieveData();
 
-for (let i = 0; i < restaurants.length; i++) {
-  console.log(restaurants[i]);
-}
+// for (let i = 0; i < restaurants.length; i++) {
+//   console.log(restaurants[i]);
+// }
 
 export default function Resturants() {
   return (

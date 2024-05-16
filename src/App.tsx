@@ -8,6 +8,7 @@ import Signin from './pages/Signin';
 // import Protected from './contexts/protected';
 import MyRestaurant from './pages/MyRestaurant';
 import Restaurants from './pages/Restaurants';
+import LeaderBoard from './pages/Leaderboard';
 import ViewRestaurant from './pages/ViewRestaurant';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/leaderboard" element={<LeaderBoard />} />
           <Route
             path="/dashboard"
             element={<Dashboard />}
