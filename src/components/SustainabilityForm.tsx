@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
-
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
@@ -12,9 +11,11 @@ interface Ingredient {
 }
 
 interface FormData {
+  restaurantName: string; // Add restaurantName field
   ingredients: Ingredient[];
   recycle: boolean;
   takeoutContainers: string;
+  utensils: string; // Add utensils field
   foodWasteDealing: boolean;
   waterUsage: string;
   gasOrElectricStove: boolean;
@@ -25,11 +26,13 @@ interface FormData {
 
 const SustainabilityForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
+    restaurantName: '', // Initialize restaurantName
     ingredients: [
       { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false },
     ],
     recycle: false,
     takeoutContainers: '',
+    utensils: '', // Initialize utensils
     foodWasteDealing: false,
     waterUsage: '',
     gasOrElectricStove: false,
@@ -94,6 +97,19 @@ const SustainabilityForm: React.FC = () => {
       onSubmit={handleSubmit}
       className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg"
     >
+      <div className="mb-4">
+        <label className="block mb-2">
+          Restaurant Name
+          <input
+            type="text"
+            name="restaurantName"
+            value={formData.restaurantName}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
+      
       <fieldset className="mb-6">
         <legend className="text-2xl font-semibold mb-4">Ingredients</legend>
         {formData.ingredients.map((ingredient, index) => (
@@ -189,6 +205,22 @@ const SustainabilityForm: React.FC = () => {
             <option value="Compostable">Compostable</option>
             <option value="Recyclable">Recyclable</option>
             <option value="Biodegradable">Biodegradable</option>
+          </select>
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          What utensils are used?
+          <select
+            name="utensils"
+            value={formData.utensils}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          >
+            <option value="">Select utensil type</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Compostable">Compostable</option>
           </select>
         </label>
       </div>
