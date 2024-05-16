@@ -35,19 +35,24 @@ interface FormData {
 }
 
 const Dashboard: React.FC = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [goals, setGoals] = useState<Array<Goal>>([]);
   const [newGoal, setNewGoal] = useState('');
   const [formData, setFormData] = useState<FormData | null>(null);
+  const [recommendations, setRecommendations] = useState<string>('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       auth,
       async (currentUser: User | null) => {
         if (currentUser) {
-          const userDoc = doc(db, 'sustainabilityForms', currentUser.uid);
+          const userDoc = doc(db, 'sustainabilityForm', currentUser.uid);
           const docSnap = await getDoc(userDoc);
           if (docSnap.exists()) {
-            setFormData(docSnap.data() as FormData);
+            const data = docSnap.data() as FormData;
+            setFormData(data);
+            await sendFormDataToServer(data);
+          } else {
+            console.log('No form data found for user.');
           }
         }
       },
@@ -55,6 +60,24 @@ const Dashboard: React.FC = () => {
 
     return () => unsubscribe();
   }, []);
+
+  const sendFormDataToServer = async (data: FormData) => {
+    try {
+      const res = await fetch('http://localhost:5001/call-bedrock', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: `Give me recommendations to be more sustainable given data about my restaurant: ${JSON.stringify(data)}`,
+        }),
+      });
+      const responseData = await res.json();
+      setRecommendations(responseData.answer);
+    } catch (error) {
+      console.error('Error sending form data to server:', error);
+    }
+  };
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +118,10 @@ const Dashboard: React.FC = () => {
   return (
     <div className="pt-[5rem] container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Dashboard</h1>
+      <div className="mt-4">
+        <h2 className="text-2xl font-bold mb-2">Recommendations</h2>
+        <p>{recommendations}</p>
+      </div>
       {/* New Wider Line Graph Section */}
       <div className="mb-4">
         <h2 className="text-2xl font-bold mb-2 text-center">Weekly Metrics</h2>
@@ -156,7 +183,7 @@ const Dashboard: React.FC = () => {
           />
         </div>
       </div>
-      <Chatbot /> {/* Add the Chatbot component */}
+      <Chatbot formData={formData} /> {/* Pass formData to Chatbot */}
     </div>
   );
 };
