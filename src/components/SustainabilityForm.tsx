@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTrashAlt, FaPlus, FaRecycle } from 'react-icons/fa';
+
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
