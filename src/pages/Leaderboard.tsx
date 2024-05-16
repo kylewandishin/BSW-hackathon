@@ -52,7 +52,10 @@ export default function Leaderboard() {
           </thead>
           <tbody>
             {restaurants.map((restaurant, index) => (
-              <tr key={restaurant.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+              <tr
+                key={restaurant.id}
+                className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+              >
                 <td className="py-4 px-5 border-b border-gray-200 text-sm">
                   {restaurant.id}
                 </td>
