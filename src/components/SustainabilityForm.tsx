@@ -103,13 +103,16 @@ const SustainabilityForm: React.FC = () => {
         await setDoc(userDoc, { ...formData, userId: user.uid });
 
         // Call the new endpoint to get the sustainability score
-        const response = await fetch('http://localhost:5001/get-sustainability-score', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          'http://localhost:5001/get-sustainability-score',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ formData }),
           },
-          body: JSON.stringify({ formData }),
-        });
+        );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -119,9 +122,15 @@ const SustainabilityForm: React.FC = () => {
         const sustainabilityScore = responseData.score;
 
         // Save the sustainability score to Firebase
-        await setDoc(userDoc, { ...formData, sustainabilityScore, userId: user.uid });
+        await setDoc(userDoc, {
+          ...formData,
+          sustainabilityScore,
+          userId: user.uid,
+        });
 
-        alert(`Data saved successfully. Sustainability score: ${sustainabilityScore}`);
+        alert(
+          `Data saved successfully. Sustainability score: ${sustainabilityScore}`,
+        );
         console.log('formData:', JSON.stringify(formData, null, 2));
       } catch (error) {
         console.error('Error saving data:', error);
