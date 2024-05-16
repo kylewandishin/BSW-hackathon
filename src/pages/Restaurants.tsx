@@ -16,16 +16,15 @@ let count = 0;
 
 const retrieveData = async () => {
   const querySnapshot = await getDocs(collection(db, 'sustainabilityForm'));
-  restaurants = querySnapshot.docs.map(doc => {
+  restaurants = querySnapshot.docs.map((doc) => {
     const { restaurantName, address } = doc.data();
     return {
       id: count++,
       name: restaurantName,
-      location: address
+      location: address,
     };
-
   });
-}
+};
 
 retrieveData();
 
