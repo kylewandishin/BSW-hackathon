@@ -44,11 +44,10 @@ export default function Topbar() {
 
   return (
     <div className="bg-white shadow-md h-[4rem] flex items-center justify-between px-4 md:px-8 w-full fixed top-0 z-10">
-      <div className="flex items-center space-x-2">
-        <Link to="/" className="flex items-center space-x-2">
+      <div className="flex items-center space-x-4">
+        <Link to="/" className="flex items-center space-x-2 border-r border-gray-300 pr-4">
           <div className="w-8 h-8 md:w-12 md:h-12 bg-gray-300 flex items-center justify-center rounded-full">
             <img className="md:w-14 w-10" src={logo} alt="logo" />
-            {/* <span className="text-white font-bold">Logo</span> */}
           </div>
           <span className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New">
             Home
@@ -56,7 +55,7 @@ export default function Topbar() {
         </Link>
         <Link
           to="/restaurants"
-          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+          className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
         >
           Restaurants
         </Link>
@@ -64,15 +63,21 @@ export default function Topbar() {
           <>
             <Link
               to="/dashboard"
-              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
             >
               Dashboard
             </Link>
             <Link
               to="/myrestaurant"
-              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New"
+              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
             >
               My Restaurant
+            </Link>
+            <Link
+              to="/leaderboard"
+              className="text-gray-800 md:text-xl text-lg hover:text-gray-600 transition-colors font-Courier New border-r border-gray-300 pr-4"
+            >
+              Leaderboard
             </Link>
           </>
         )}
