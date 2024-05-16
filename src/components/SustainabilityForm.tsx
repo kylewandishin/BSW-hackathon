@@ -11,34 +11,38 @@ interface Ingredient {
 }
 
 interface FormData {
-  restaurantName: string; // Add restaurantName field
+  restaurantName: string;
+  address: string;
   ingredients: Ingredient[];
   recycle: boolean;
   takeoutContainers: string;
-  utensils: string; // Add utensils field
+  utensils: string;
   foodWasteDealing: boolean;
   waterUsage: string;
   gasOrElectricStove: boolean;
   powerUsage: string;
   greenEnergy: number;
   veganVegetarianOptions: boolean;
+  customersPerWeek: string;
 }
 
 const SustainabilityForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    restaurantName: '', // Initialize restaurantName
+    restaurantName: '',
+    address: '',
     ingredients: [
       { ingredient: '', company: '', lbsPerWeek: '', locallySourced: false },
     ],
     recycle: false,
     takeoutContainers: '',
-    utensils: '', // Initialize utensils
+    utensils: '',
     foodWasteDealing: false,
     waterUsage: '',
     gasOrElectricStove: false,
     powerUsage: '',
     greenEnergy: 0,
     veganVegetarianOptions: false,
+    customersPerWeek: '',
   });
 
   const handleChange = (
@@ -104,6 +108,19 @@ const SustainabilityForm: React.FC = () => {
             type="text"
             name="restaurantName"
             value={formData.restaurantName}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          Address
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
             onChange={handleChange}
             className="w-full p-2 border rounded-lg"
           />
@@ -301,6 +318,19 @@ const SustainabilityForm: React.FC = () => {
             checked={formData.veganVegetarianOptions}
             onChange={handleChange}
             className="ml-2"
+          />
+        </label>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2">
+          Customers/week
+          <input
+            type="text"
+            name="customersPerWeek"
+            value={formData.customersPerWeek}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
           />
         </label>
       </div>
